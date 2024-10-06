@@ -149,7 +149,9 @@
     <position class="ankle" name="left_ankle" joint="left_ankle_joint"/>
     <position class="metatarsophalangeal" name="left_metatarsophalangeal" joint="left_metatarsophalangeal_joint"/>
   </actuator>
-
+    <visual>
+    <global offheight="600" offwidth="800"/>
+    </visual>
   <!-- Commands that define the home posture -->
   <keyframe>
     <!-- x y z qw qx qy qz {qi} -->
