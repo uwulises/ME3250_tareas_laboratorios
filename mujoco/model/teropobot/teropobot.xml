@@ -1,0 +1,161 @@
+<mujoco model="teropobot">
+  <compiler angle="radian" meshdir="assets" texturedir="assets" autolimits="true"/>
+
+  <!-- <option cone="elliptic" impratio="100"/> --> <!-- Brax doesn't support cone_elliptic-->
+
+  <default>
+    <default class="teropobot">
+      <geom friction="0.2" margin="0.001"/>
+      <!-- <joint damping="1.0" frictionloss="0.03" armature="0.01"/> -->
+      <joint damping="1.0" armature="0.01"/> <!-- Brax doesn't support frictionloss-->
+      <position kp="60" ctrlrange="-3.141592 3.141592" forcerange="-7 7"/>
+
+      <!-- Joints -->
+      <default class="hip_roll">
+        <joint range="-0.2 0.11" axis="1 0 0"/>
+        <position ctrlrange="-0.2 0.11"/>
+      </default>
+      <default class="hip_pitch">
+        <joint range="-1.57 1.57" axis="0 1 0"/>
+        <position ctrlrange="-1.57 1.57"/>
+      </default>
+      <default class="knee">
+        <joint range="-1.57 1.57" axis="0 1 0"/>
+        <position ctrlrange="-1.57 1.57"/>
+      </default>
+      <default class="ankle">
+        <joint range="-1.57 0.64" axis="0 1 0"/>
+        <position ctrlrange="-1.57 0.64"/>
+      </default>
+      <default class="metatarsophalangeal">
+        <joint range="-0.5 1.0" axis="0 1 0"/>
+        <position ctrlrange="-0.5 1.0"/>
+      </default>
+
+      <!-- visual -->
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2" material="default_material"/>
+      </default>
+
+      <!-- Links - collision bodies -->
+      <default class="collision">
+        <geom group="3" type="capsule"/>
+        <default class="base_link">
+          <geom type="box" size="0.310 0.01 0.05" pos="-0.05 0.0 0.05" material="collision_material"/>
+        </default>
+        <default class="head_link">
+          <geom type="box" size="0.22 0.03 0.04" pos="0.05 0.0 0.02" material="collision_material"/>
+        </default>
+        <default class="hip_link">
+          <geom type="box" size="0.025 0.025 0.03" pos="0.0 0.0 0.03" material="collision_material"/>
+        </default>
+        <default class="femur">
+          <geom type="box" size="0.02 0.02 0.025" pos="0.0 0.0 -0.08" material="collision_material"/>
+        </default>
+        <default class="tibia">
+          <geom type="box" size="0.02 0.02 0.06" pos="0.0 0.0 -0.06" material="collision_material"/>
+        </default>
+        <default class="metatarsals">
+          <geom type="box" size="0.02 0.02 0.02" pos="0.0 0.0 -0.06" material="collision_material"/>
+        </default>
+        <default class="phalanges">
+          <geom type="box" size="0.02 0.05 0.01" pos="0.06 0.0 -0.01" material="collision_material"/>       
+        </default>
+        <default class="phalanges_rear">
+          <geom type="box" size="0.02 0.03 0.01" pos="0.0 0.0 -0.01" material="collision_material"/>          
+        </default>
+      </default>
+    </default>
+  </default>
+
+  <!-- Define assets -->
+  <asset>
+    <material name="default_material" specular="0" shininess="0.25" rgba="0.6 0.6 0.6 1"/>
+    <material name="collision_material" specular="0" shininess="0.25" rgba="1.0 0.5 0.0 0.8"/>
+    <mesh class="teropobot" file="base_link.obj"/>
+    <mesh class="teropobot" file="l1.obj"/>
+    <mesh class="teropobot" file="l2.obj"/>
+    <mesh class="teropobot" file="l3.obj"/>
+    <mesh class="teropobot" file="l4.obj"/>
+    <mesh class="teropobot" file="foot.obj"/>
+  </asset>
+
+  <worldbody>
+    <light name="spotlight" mode="targetbodycom" target="base_link" pos="0 -1 2"/>
+
+    <!-- Body -->
+    <body name="base_link" pos="0 0 0.45" childclass="teropobot">
+      <!-- <freejoint name="base_link"/> -->
+      <!-- <camera name="track" pos="0.846 -1.465 0.35" xyaxes="0.866 0.500 0.000 -0.171 0.296 0.940" mode="trackcom"/> -->
+
+      <inertial mass="1.410" pos="0.094622 0.000221 0.120537" quat="1 0 0 0" diaginertia="0.001 0.0007 0.0007"/>
+      <geom class="visual" mesh="base_link" material="default_material"/>
+      <geom class="base_link"/>
+
+      <!-- Left leg -->
+      <body name="left_hip" pos="0 0.06 0">
+        <joint class="hip_roll" name="left_hip_roll_joint"/>
+        <inertial mass="0.248" pos="0 0 -0.02" quat="1 0 0 0" diaginertia="1E-4 1E-4 0.5E-4"/>
+        <geom class="visual" mesh="l1" quat="1 0 0 0" pos="0 0 0"/>
+        <geom class="hip_link"/>
+
+        <body name="left_hip_pitch" pos="0 0.0 -0.033">
+          <joint class="hip_pitch" name="left_hip_pitch_joint"/>
+          <inertial mass="0.042" pos="0 0 -0.0625" quat="1 0 0 0" diaginertia="2E-5 2E-5 0.2E-5"/>
+          <geom class="visual" mesh="l2" quat="1 0 0 0" pos="0 0 0"/>
+          <geom class="femur"/>
+
+          <body name="left_knee" pos="0 0 -0.125">
+            <joint class="knee" name="left_knee_joint"/>
+            <inertial mass="0.420" pos="0 0 -0.06" quat="1 0 0 0" diaginertia="0.5E-3 0.5E-3 0.1E-3"/>
+            <geom class="visual" mesh="l3" quat="1 0 0 0" pos="0 0 0"/>
+            <geom class="tibia"/>
+
+            <body name="left_ankle" pos="0 0 -0.119">
+              <joint class="ankle" name="left_ankle_joint"/>
+              <inertial mass="0.216" pos="0 0 -0.05" quat="1 0 0 0" diaginertia="1E-4 1E-4 0.4E-4"/>
+              <geom class="visual" mesh="l4" quat="1 0 0 0" pos="0 0 0"/>
+              <geom class="metatarsals"/>
+
+              <body name="left_phalanges" pos="0 0 -0.088">
+                <joint class="metatarsophalangeal" name="left_metatarsophalangeal_joint"/>
+                <inertial mass="0.078" pos="0.01 0 0" quat="1 0 0 0" diaginertia="0.00005 0.00005 0.00009"/>
+                <geom class="visual" mesh="foot" quat="1 0 0 0" pos="0 0 0"/>
+                <geom class="phalanges"/>
+                <geom class="phalanges_rear"/>
+                <site name="left_foot"/>
+              </body> <!-- Left Phalanges-->
+            </body> <!-- Left Metatarsals -->
+          </body> <!-- Left tibia -->
+        </body> <!--
+        Left femur -->
+      </body> <!--
+      Left hip -->
+      <!-- Left leg -->
+    </body>
+  </worldbody>
+
+  <!-- Define actuators -->
+  <!-- class: is the class of the joint
+         name: is the label
+         joint: the name of the joint where the actuator is set
+    -->
+  <actuator>
+
+
+    <position class="hip_roll" name="left_hip_roll" joint="left_hip_roll_joint"/>
+    <position class="hip_pitch" name="left_hip_pitch" joint="left_hip_pitch_joint"/>
+    <position class="knee" name="left_knee" joint="left_knee_joint"/>
+    <position class="ankle" name="left_ankle" joint="left_ankle_joint"/>
+    <position class="metatarsophalangeal" name="left_metatarsophalangeal" joint="left_metatarsophalangeal_joint"/>
+  </actuator>
+
+  <!-- Commands that define the home posture -->
+  <keyframe>
+    <!-- x y z qw qx qy qz {qi} -->
+    <!-- qi are the generalized coordinates of all the joints -->
+    <key name="home" qpos=" 0 0 0 0 0"
+      ctrl=" 0 0 0 0 0 "/>
+  </keyframe>
+</mujoco>
+  
