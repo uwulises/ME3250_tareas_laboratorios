@@ -42,22 +42,22 @@
   </asset>
 
   <worldbody>
-    <light name="spotlight" mode="targetbodycom" target="base_link" pos="0 -1 2"/>
+    <light name="spotlight" mode="targetbodycom" target="base_scara" pos="0 -1 2"/>
 
     <!-- Body -->
-    <body name="base_link" pos="0 0 0.285" childclass="scara">
+    <body name="base_scara" pos="0 0 0.285" childclass="scara">
       <inertial mass="1.410" pos="0.094622 0.000221 0.120537" quat="1 0 0 0" diaginertia="0.001 0.0007 0.0007"/>
-      <geom class="visual" mesh="base_link" material="default_material"/>
+      <geom class="visual" mesh="base_scara" material="default_material"/>
 
       <body name="link_hombro" pos="0 0 0.043">
         <joint class="hombro" name="hombro_joint"/>
         <inertial mass="0.248" pos="0 0 -0.02" quat="1 0 0 0" diaginertia="1E-4 1E-4 0.5E-4"/>
-        <geom class="visual" mesh="l1" quat="1 0 0 0" pos="0 0 0"/>
+        <geom class="visual" mesh="hombro" quat="1 0 0 0" pos="0 0 0"/>
 
         <body name="link_codo" pos="0.3 0.0 0">
           <joint class="codo" name="codo_joint"/>
           <inertial mass="0.042" pos="0 0 -0.0625" quat="1 0 0 0" diaginertia="2E-5 2E-5 0.2E-5"/>
-          <geom class="visual" mesh="l2" material="black" quat="1 0 0 0" pos="0 0 0"/>
+          <geom class="visual" mesh="codo" material="black" quat="1 0 0 0" pos="0 0 0"/>
 
           <body name="link_z" pos="0.33 0 -0.1">
             <joint class="z" name="z_joint"/>
