@@ -72,6 +72,7 @@
   <asset>
     <material name="default_material" specular="0" shininess="0.25" rgba="0.6 0.6 0.6 1"/>
     <material name="collision_material" specular="0" shininess="0.25" rgba="1.0 0.5 0.0 0.8"/>
+    <material name="black" specular="0" shininess="0.25" rgba="0.15 0.15 0.15 1"/>
     <mesh class="teropobot" file="base_link.obj"/>
     <mesh class="teropobot" file="l1.obj"/>
     <mesh class="teropobot" file="l2.obj"/>
@@ -96,7 +97,7 @@
       <body name="left_hip" pos="0 0.06 0">
         <joint class="hip_roll" name="left_hip_roll_joint"/>
         <inertial mass="0.248" pos="0 0 -0.02" quat="1 0 0 0" diaginertia="1E-4 1E-4 0.5E-4"/>
-        <geom class="visual" mesh="l1" quat="1 0 0 0" pos="0 0 0"/>
+        <geom class="visual" mesh="l1" material="black" quat="1 0 0 0" pos="0 0 0"/>
         <geom class="hip_link"/>
 
         <body name="left_hip_pitch" pos="0 0.0 -0.033">
@@ -108,7 +109,7 @@
           <body name="left_knee" pos="0 0 -0.125">
             <joint class="knee" name="left_knee_joint"/>
             <inertial mass="0.420" pos="0 0 -0.06" quat="1 0 0 0" diaginertia="0.5E-3 0.5E-3 0.1E-3"/>
-            <geom class="visual" mesh="l3" quat="1 0 0 0" pos="0 0 0"/>
+            <geom class="visual" mesh="l3" material="black" quat="1 0 0 0" pos="0 0 0"/>
             <geom class="tibia"/>
 
             <body name="left_ankle" pos="0 0 -0.119">
@@ -120,7 +121,7 @@
               <body name="left_phalanges" pos="0 0 -0.088">
                 <joint class="metatarsophalangeal" name="left_metatarsophalangeal_joint"/>
                 <inertial mass="0.078" pos="0.01 0 0" quat="1 0 0 0" diaginertia="0.00005 0.00005 0.00009"/>
-                <geom class="visual" mesh="foot" quat="1 0 0 0" pos="0 0 0"/>
+                <geom class="visual" mesh="foot" material="black" quat="1 0 0 0" pos="0 0 0"/>
                 <geom class="phalanges"/>
                 <geom class="phalanges_rear"/>
                 <site name="left_foot"/>

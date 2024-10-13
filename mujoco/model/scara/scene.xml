@@ -1,6 +1,6 @@
-<mujoco model="teropobot scene">
+<mujoco model="scara scene">
 
-  <include file="teropobot.xml"/>
+  <include file="scara.xml"/>
 
   <statistic center="0 0 0.1" extent="0.8"/>
 
