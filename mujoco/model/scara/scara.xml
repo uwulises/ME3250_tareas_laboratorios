@@ -35,9 +35,9 @@
     <material name="default_material" specular="0" shininess="0.25" rgba="0.6 0.6 0.6 1"/>
     <material name="black" specular="0" shininess="0.25" rgba="0.15 0.15 0.15 1"/>
     <material name="collision_material" specular="0" shininess="0.25" rgba="1.0 0.5 0.0 0.8"/>
-    <mesh class="scara" file="base_link.obj"/>
-    <mesh class="scara" file="l1.obj"/>
-    <mesh class="scara" file="l2.obj"/>
+    <mesh class="scara" file="base_scara.obj"/>
+    <mesh class="scara" file="hombro.obj"/>
+    <mesh class="scara" file="codo.obj"/>
     <mesh class="scara" file="z.obj"/>
   </asset>
 
