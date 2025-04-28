@@ -1,14 +1,12 @@
 import serial
 import time
 import matplotlib.pyplot as plt
-from collections import deque
 import csv
 from datetime import datetime
 import json
-import os
 import pandas as pd
 # Serial port configuration
-serial_port = 'COM8'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
+serial_port = '/dev/tty.wchusbserial14140'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
 baud_rate = 115200
 timeout = 5
 
@@ -36,6 +34,8 @@ def plot_from_csv(csv_tag):
     data = pd.read_csv(csv_tag)
     # Extract data
     time = data['Time']
+    # Convert time to seconds numpy array
+    time = pd.to_numeric(time, errors='coerce').to_numpy()
     position = data['Position']
     acceleration_x = data['ax']
     acceleration_y = data['ay']
@@ -51,7 +51,7 @@ def plot_from_csv(csv_tag):
         angular_acceleration.append((angular_speed[i] - angular_speed[i-1]) / (time[i] - time[i-1]))
 
     # subplot position and angular speed
-    fig, axs = plt.subplots(3, 1, figsize=(10, 10))
+    fig, axs = plt.subplots(3, 1, figsize=(10, 8))
     axs[0].plot(time, position, label='Position')
     axs[0].set_title('Position vs Time')
     axs[0].set_xlabel('Time (s)')
@@ -75,7 +75,7 @@ def plot_from_csv(csv_tag):
 
 
     #plot with subplots
-    fig, axs = plt.subplots(3, 1, figsize=(10, 10))
+    fig, axs = plt.subplots(3, 1, figsize=(10, 8))
     axs[0].plot(time, acceleration_x, label='Acceleration X')
     axs[0].set_title('Acceleration X vs Time')
     axs[0].set_xlabel('Time (s)')
