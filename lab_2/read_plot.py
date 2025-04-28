@@ -22,7 +22,7 @@ def save_to_csv():
         filename = f"serial_data_{now}.csv"
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['Time', 'Position', 'ax', 'ay', 'az'])
+            writer.writerow(['time', 'position', 'ax', 'ay', 'az'])
             writer.writerows(all_data)
         print(f"\nData saved to '{filename}'")
     else:
@@ -33,10 +33,10 @@ def plot_from_csv(csv_tag):
     # Load the CSV file
     data = pd.read_csv(csv_tag)
     # Extract data
-    time = data['Time']
+    time = data['time']
     # Convert time to seconds numpy array
     time = pd.to_numeric(time, errors='coerce').to_numpy()
-    position = data['Position']
+    position = data['position']
     acceleration_x = data['ax']
     acceleration_y = data['ay']
     acceleration_z = data['az']
