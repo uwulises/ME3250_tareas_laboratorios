@@ -17,14 +17,18 @@ Encoder myEnc(2, 3);
 
 void setup() {
   Serial.begin(115200);
+  pinMode(13,INPUT_PULLUP);
   accel.setRange(ADXL345_RANGE_16_G);
   accel.begin();
   delay(100);
 }
 
-long oldPosition = -999;
 
 void loop() {
+
+  if(!digitalRead(13)){
+    myEnc.write(1000);
+  }
   long newPosition = myEnc.read();
   /* Get a new sensor event */
   sensors_event_t event;

@@ -6,7 +6,7 @@ from datetime import datetime
 import json
 import pandas as pd
 # Serial port configuration
-serial_port = '/dev/tty.wchusbserial14140'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
+serial_port = '/dev/tty.wchusbserial14130'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
 baud_rate = 115200
 timeout = 5
 
@@ -117,7 +117,7 @@ try:
         
             # Extract the values from the JSON data
             arduino_time = float(data_dict['time']) / 1000.0
-            position = float(data_dict['p'])*360.0/1000.0 
+            position = float(data_dict['p'])*360.0/4000.0 
             ax = float(data_dict['ax'])/1000.0
             ay = float(data_dict['ay'])/1000.0
             az = float(data_dict['az'])/1000.0
