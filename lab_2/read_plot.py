@@ -16,10 +16,10 @@ timeout = 5
 all_data = []
 
 # Function to save the data to a CSV file
-def save_to_csv():
+def save_to_csv(name='G'):
     if all_data:
         now = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"serial_data_{now}.csv"
+        filename = f"{name}_data_{now}.csv"
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(['time', 'position', 'ax', 'ay', 'az'])
@@ -101,7 +101,9 @@ def plot_from_csv(csv_tag):
 try:
     ser = serial.Serial(serial_port, baud_rate, timeout=timeout)
     time.sleep(2)  # Wait for the serial port to initialize
-    input("Press Enter to start receiving data...")
+    nombre_grupo = input("Enter name to start receiving data...")
+    ser.flush()
+    ser.write("GO\n".encode())
     while True:
         
         line = ser.readline().decode('utf-8', errors='ignore').strip()
@@ -129,7 +131,7 @@ except serial.SerialException as e:
     print(f"Error opening serial port {serial_port}: {e}")
 except KeyboardInterrupt:
     print("Program terminated by user.")
-    file=save_to_csv()
+    file=save_to_csv(nombre_grupo)
     plot_from_csv(file)
 
 finally:
