@@ -48,8 +48,14 @@ def update(val):
     #update the point
     point.set_data(x, y)
     point2.set_data(x, z)
-    q0,q1,q2 = move_xyz(x, y, z)
+
+
+    q0,q1,q2 = move_xyz(x, y, z, eff_off=[60, 0, 24])
+    #update the point
     mk2_comm.send_command([q0, q1, q2])
+    print("q0,q1,q2: ",q0, q1, q2)
+
+    
 def reset(event):
     x_slider.reset()
     y_slider.reset()
@@ -59,13 +65,11 @@ def reset(event):
 
 if __name__ == "__main__":
 
-
-
     mk2_comm = SerialControl(port='COM8', baudrate=115200)
     mk2_comm.open_serial()
     time.sleep(1)
     # Create two subplots side view and top view
-    fig = plt.figure(figsize=(10, 5))
+    fig = plt.figure(figsize=(10, 6))
     ax = fig.add_subplot(121)
     ax2 = fig.add_subplot(122)
     ax.set_title('Top view')
@@ -78,6 +82,8 @@ if __name__ == "__main__":
     ax.set_ylim(-100, 100)
     ax2.set_xlim(0, 300)
     ax2.set_ylim(0, 300)
+    ax.grid()
+    ax2.grid()
     
     #create a point to represent the end effector
     point, = ax.plot([], [], 'ro', markersize=10)
@@ -85,8 +91,6 @@ if __name__ == "__main__":
 
     # adjust the main plot to make room for the sliders
     fig.subplots_adjust(bottom=0.25)
-
-
 
     #Make x slider
     axx = fig.add_axes([0.25, 0.15, 0.5, 0.05])
@@ -117,17 +121,18 @@ if __name__ == "__main__":
         label="z",
         valmin=0,
         valmax=250,
-        valinit=180,
+        valinit=220,
         orientation="horizontal"
     )
+
     # register the update function with each slider
     x_slider.on_changed(update)
     y_slider.on_changed(update)
     z_slider.on_changed(update)
 
-
     # Create a `matplotlib.widgets.Button` to reset the sliders to initial values.
     resetax = fig.add_axes([0.85, 0.025, 0.1, 0.04])
     button = Button(resetax, 'Reset', hovercolor='0.975')
     button.on_clicked(reset)
+
     plt.show()
