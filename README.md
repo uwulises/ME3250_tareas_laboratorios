@@ -9,3 +9,7 @@
 ##
 
 <img src="teropobot.png" width="500">
+
+##
+
+<img src="quadruped.png" width="350">
